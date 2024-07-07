@@ -1,4 +1,7 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using GidraTopServer.Data;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //поддержка Cors
+builder.Services.AddCors(options=>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod();//разрешение запросов с фронта
+    });
+});
 
 var app = builder.Build();
 
