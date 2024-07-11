@@ -4,12 +4,8 @@ using Microsoft.Identity.Client;
 
 namespace GidraTopServer.Data;
 
-public class ApplicationDbContext :DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-    {
-    }
-
     public DbSet<ProductCard> ProductCards { get; set; }
 
     public DbSet<User> Users { get; set; }
@@ -20,6 +16,10 @@ public class ApplicationDbContext :DbContext
     public DbSet<Category> Categories { get; set; }
 
     public DbSet<ProductInfo> ProductInfo { get; set; }
+
+    public DbSet<Country> Countrys { get; set; }
+    
+    public DbSet<Banner> Banners { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -56,13 +56,6 @@ public class ApplicationDbContext :DbContext
             .WithOne(p => p.Brand)
             .HasForeignKey(p => p.BrandId);
 
-        // Настройка связи между Brand и Country
-        modelBuilder.Entity<Brand>()
-            .HasOne(b => b.Country)
-            .WithMany(c => c.Brands)
-            .HasForeignKey(b => b.CountryId)
-            .OnDelete(DeleteBehavior.Cascade); // Удаление связанных брендов при удалении страны
-
         //один продукт может иметь множество оценок
         modelBuilder.Entity<Product>()
         .HasMany(p => p.Ratings)
@@ -84,5 +77,13 @@ public class ApplicationDbContext :DbContext
             .HasMany(c => c.Brands)
             .WithMany(b => b.Categories)
             .UsingEntity(j => j.ToTable("CategoryBrand"));
+
+
+        modelBuilder.Entity<Country>()
+            .HasMany(c => c.Brands)
+            .WithOne()
+            .HasForeignKey(b => b.CountryId);
     }
+
+public DbSet<GidraTopServer.Models.Banner> Banner { get; set; } = default!;
 }

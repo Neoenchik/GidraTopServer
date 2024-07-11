@@ -6,12 +6,15 @@ public class ProductInfo
 {
     public int Id { get; set; }
 
-    [Required]
+    
     public int ProductId { get; set; }
 
-    public required Product Product { get; set; }
+    public Product? Product { get; set; }
 
+
+    [Required]
     public required string Title { get; set; }
 
+    [Required]
     public required string Description { get; set; }
 }

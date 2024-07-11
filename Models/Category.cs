@@ -7,7 +7,7 @@ public class Category
     public int Id { get; set; }
 
     [Required]
-    public required string Name { get; set; }
+    public required string CategoryName { get; set; }
 
     // Навигационное свойство для связи один ко многим с Product
     public ICollection<Product>? Products { get; set; }

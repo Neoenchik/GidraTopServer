@@ -43,7 +43,11 @@ public class CategoryController : Controller
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var categories = await _context.Categories.ToListAsync();
+        var categories = await _context.Categories
+                .Include(c => c.Brands)
+                .Include(c => c.Products)
+                .ToListAsync();
+
         return Ok(categories);
     }
 }

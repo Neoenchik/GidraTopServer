@@ -7,15 +7,13 @@ public class Brand
     public int Id { get; set; }
 
     [Required]
-    public required string Name { get; set; }
+    public required string BrandName { get; set; }
 
     [Required]
     public int CountryId { get; set; }
 
-    public required Country Country { get; set; }
-
     // Навигационное свойство для связи один ко многим с Product
-    public required ICollection<Product> Products { get; set; }
+    public ICollection<Product>? Products { get; set; }
 
-    public required ICollection<Category> Categories { get; set; }
+    public ICollection<Category>? Categories { get; set; }
 }

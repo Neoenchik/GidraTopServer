@@ -1,12 +1,15 @@
-﻿namespace GidraTopServer.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GidraTopServer.Models;
 
 public class Country
 {
     public int Id { get; set; }
 
-    public required string Name { get; set; }
+    [Required]
+    public required string CountryName { get; set; }
 
-    public required string Img { get; set; }
+    public string? Img { get; set; }
 
-    public required ICollection<Brand> Brands { get; set; }
+    public ICollection<Brand> Brands { get; } = new List<Brand>();
 }
